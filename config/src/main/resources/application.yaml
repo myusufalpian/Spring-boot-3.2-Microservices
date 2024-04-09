@@ -1,0 +1,17 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/llawliet1945/assessment-bvk-config-server.git
+          skipSslValidation: true
+          clone-on-start: true
+          timeout: 10
+          default-label: main
+          ignore-local-ssh-settings: false
+          refresh-rate: 300
