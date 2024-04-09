@@ -1,4 +1,4 @@
-package id.mydev.gateway.config;
+package id.mydev.auth.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -63,6 +63,5 @@ public class JwtUtil {
     public String getUsername(String token) {
         return getAllClaimsFromToken(token).getSubject();
     }
-
 
 }
