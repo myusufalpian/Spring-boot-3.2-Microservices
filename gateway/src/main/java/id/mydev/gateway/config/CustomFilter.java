@@ -22,7 +22,7 @@ public class CustomFilter implements GatewayFilterFactory<Object> {
     public GatewayFilter apply(Object config) {
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
-            if (routeValidator.isSecured.test((org.springframework.http.server.ServerHttpRequest) request)) {
+            if (routeValidator.isSecured.test(request)) {
                 final String token = this.getAuthHeader(request);
                 try {
                     if (this.isAuthMissing(request)) {
@@ -31,12 +31,12 @@ public class CustomFilter implements GatewayFilterFactory<Object> {
                     if (jwtUtil.isInvalid(token)){
                         return this.onError(exchange, "Auth header is invalid", HttpStatus.UNAUTHORIZED);
                     }
-                }catch (Exception e){
-                    return this.onError(exchange, "Auth header is invalid", HttpStatus.UNAUTHORIZED);
+                } catch (Exception e) {
+                    return this.onError(exchange, "Error occurred while processing auth header", HttpStatus.UNAUTHORIZED);
                 }
                 this.populateRequestWithHeaders(exchange, token);
             }
-            return chain.filter(exchange).then(Mono.fromRunnable(() -> {}));
+            return chain.filter(exchange);
         };
     }
 
@@ -45,14 +45,14 @@ public class CustomFilter implements GatewayFilterFactory<Object> {
         return Object.class; // Return the class type of the configuration object
     }
 
-    private Mono<Void> onError(ServerWebExchange exchange, String onError, HttpStatus httpStatus) {
+    private Mono<Void> onError(ServerWebExchange exchange, String errorMessage, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(httpStatus);
         return response.setComplete();
     }
 
     private String getAuthHeader(ServerHttpRequest request) {
-        return request.getHeaders().getOrEmpty("Auth").get(0);
+        return request.getHeaders().getFirst("Auth");
     }
 
     private boolean isAuthMissing(ServerHttpRequest request) {

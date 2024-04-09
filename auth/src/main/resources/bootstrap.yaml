@@ -1,13 +1,13 @@
 spring:
   application:
-    name: auth-server
+    name: auth
   cloud:
     config:
       uri: http://${CONFIG_HOST:localhost}:8888
       fail-fast: true
       server:
         git:
-          uri: https://github.com/llawliet1945/assessment-bvk-config-server.git
+          uri: https://gitlab.com/myusufalpian/assessment-bvk-config-server.git
           skipSslValidation: true
           clone-on-start: true
           timeout: 10
@@ -17,8 +17,6 @@ spring:
       enabled: false
       import-check:
         enabled: false
-  config:
-    import: optional:configserver:bootstrap.yaml
 
 management:
   endpoints:

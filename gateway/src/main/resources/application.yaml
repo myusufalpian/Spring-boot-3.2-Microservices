@@ -17,8 +17,8 @@ spring:
       default-filters:
         - name: CustomFilter
       routes:
-        - id: auth-server
-          uri: lb://auth-server
+        - id: auth
+          uri: lb://auth
           predicates:
             - Path=/auth/**
           filters:
@@ -27,12 +27,6 @@ spring:
           uri: lb://user-server
           predicates:
             - Path=/user/**
-          filters:
-            - StripPrefix=1
-        - id: transaction-server
-          uri: lb://transaction-server
-          predicates:
-            - Path=/transaction/**
           filters:
             - StripPrefix=1
 

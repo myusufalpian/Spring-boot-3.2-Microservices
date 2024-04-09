@@ -8,7 +8,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/llawliet1945/assessment-bvk-config-server.git
+          uri: https://gitlab.com/myusufalpian/assessment-bvk-config-server.git
           skipSslValidation: true
           clone-on-start: true
           timeout: 10

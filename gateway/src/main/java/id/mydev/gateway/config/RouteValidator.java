@@ -1,6 +1,6 @@
 package id.mydev.gateway.config;
 
-import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,7 +12,9 @@ public class RouteValidator {
             "/auth/signin",
             "/auth/signup",
             "/auth/forgot-password**",
-            "/auth/reset-password**"
+            "/auth/reset-password**",
+            "/auth/v3/api-docs/**",
+            "/auth/swagger-ui/**"
     );
 
     public Predicate<ServerHttpRequest> isSecured =
