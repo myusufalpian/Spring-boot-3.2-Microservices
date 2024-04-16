@@ -24,29 +24,18 @@ public class AuthenticationFilter implements GatewayFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
-
         if (routeValidator.isSecured.test(request)) {
-            if (this.isAuthMissing(request))
-                return this.onError(exchange, "Authorization header is missing in request", HttpStatus.UNAUTHORIZED);
-
+            if (this.isAuthMissing(request)) return this.onError(exchange, "Authorization header is missing in request", HttpStatus.UNAUTHORIZED);
             final String token = this.getAuthHeader(request);
-            System.out.println("token: "+token);
-
-            if (jwtUtil.isInvalid(token))
-                return this.onError(exchange, "Authorization header is invalid", HttpStatus.UNAUTHORIZED);
-
+            if (jwtUtil.isInvalid(token)) return this.onError(exchange, "Authorization header is invalid", HttpStatus.UNAUTHORIZED);
             this.populateRequestWithHeaders(exchange, token);
         }
         return chain.filter(exchange);
     }
-
-
     /*PRIVATE*/
-
     private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(httpStatus);
-        System.out.println("error : " + err);
         return response.setComplete();
     }
 

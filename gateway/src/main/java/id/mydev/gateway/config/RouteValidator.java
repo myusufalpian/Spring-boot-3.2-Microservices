@@ -11,15 +11,14 @@ public class RouteValidator {
     public static final List<String> openApiEndpoints = List.of(
             "/auth/signin",
             "/auth/signup",
-            "/auth/forgot-password**",
-            "/auth/reset-password**",
-            "/auth/v3/api-docs/**",
-            "/auth/swagger-ui/**"
+            "/auth/forgot-password/**",
+            "/auth/reset-password/**",
+            "/auth/test"
     );
 
     public Predicate<ServerHttpRequest> isSecured =
             request -> openApiEndpoints
                     .stream()
-                    .noneMatch(uri -> request.getURI().getPath().contains(uri));
+                    .noneMatch(uri -> request.getURI().getPath().equals(uri));
 
 }

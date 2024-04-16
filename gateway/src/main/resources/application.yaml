@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: gateway-server
   cloud:
     gateway:
       globals:
@@ -83,3 +85,17 @@ resilience4j.timelimiter:
     backendB:
       timeoutDuration: 1s
       cancelRunningFuture: false
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+
+logging:
+  level:
+    io:
+      netty:
+        resolver:
+          dns: DEBUG

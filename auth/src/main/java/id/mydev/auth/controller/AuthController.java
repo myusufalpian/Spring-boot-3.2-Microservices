@@ -24,8 +24,8 @@ public class AuthController {
         return authService.signup(param);
     }
 
-    @GetMapping(value = "/test")
-    public String testController() {
-        return "Welcome to auth server";
+    @PostMapping(value = "/test")
+    public ResponseEntity<?> testController(@RequestBody UserRequestSignin param) throws JsonProcessingException {
+        return authService.testHitSignIn(param);
     }
 }
