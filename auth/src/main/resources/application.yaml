@@ -22,6 +22,10 @@ spring:
 
 logging:
   level:
+    io:
+      netty:
+        resolver:
+          dns: DEBUG
     org:
       hibernate:
         SQL: DEBUG
